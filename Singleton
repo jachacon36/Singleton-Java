@@ -1,0 +1,71 @@
+Java Singleton
+Una vez que tenemos claro cual es el concepto de Configurador vamos a crearlo en código .
+En este caso nuestro configurador almacenará dos valores url, 
+y base de datos que serán compartidos por el resto de Clases de la aplicación.
+//--------------------------------------------------------------------------------------
+package com.arquitecturajava;
+ 
+public class Configurador {
+ 
+ private String url;
+ private String baseDatos;
+ private static final Configurador miconfigurador;
+ 
+ public  static Configurador getConfigurador(String url,String baseDatos) {
+ 
+ if (miconfigurador==null) {
+ 
+ miconfigurador=new Configurador(url,baseDatos);
+ }
+ return miconfigurador;
+ }
+ 
+ private Configurador(String url,String baseDatos){
+ 
+ this.url=url;
+ this.baseDatos=baseDatos;
+ 
+ }
+ 
+public String getUrl() {
+ return url;
+ }
+ 
+public void setUrl(String url) {
+ this.url = url;
+ }
+ 
+public String getBaseDatos() {
+ return baseDatos;
+ }
+ 
+public void setBaseDatos(String baseDatos) {
+ this.baseDatos = baseDatos;
+ }
+}
+//------------------------------------------------------------------------------------------------------------------------------------
+Para conseguir que una clase sea de tipo Singleton necesitamos en primer lugar que su constructor sea privado. 
+De esa forma ningún programa será capaz de construir objetos de esta tipo . 
+En segundo lugar necesitaremos disponer de una variable estatica privada que almacene una referencia al objeto que vamos a 
+crear a traves del constructor . Por ultimo un método estático publico que se encarga de instanciar el objeto la primera vez y 
+almacenarlo en la variable estática.
+
+
+Una vez aclarado como funciona un Singleton es muy sencillo utilizarle desde un programa ya que basta con invocar al método estático.
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+package com.arquitecturajava;
+ 
+public class Principal {
+ 
+public static void main(String[] args) {
+ 
+ Configurador c= Configurador.getConfigurador("miurl", "mibaseDatos");
+ 
+ System.out.println(c.getUrl());
+ 
+ System.out.println(c.getBaseDatos());
+ 
+}
+ 
+}
